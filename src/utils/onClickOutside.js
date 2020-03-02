@@ -1,49 +1,40 @@
 import React from "react";
 import { findDOMNode } from "react-dom";
 
-export const ClickOutsideContext = React.createContext(true)
-
 const WithClickOutside = (WrappedComponent, config) => {
   return class WithClickoutside extends React.Component {
 
-    constructor(props) {
-      super(props);
-      this.conRef = React.createRef()
-      this.state = {
-        isClickedOutside: true
-      }
-    }
-  
+
     getComponentNode = () => {
       return findDOMNode(this);
     };
 
-    handleClickOutside = () => {
+    listenClick = () => {
       document.addEventListener("click", evt => {
-        // const element  = document.getElementById(elementId);
         const element = this.componentNode;
-        // const element = React.Children.only(children)
         let targetElement = evt.target; // clicked element
-      
+
         do {
           if (targetElement === element) {
             // This is a click inside. Do nothing, just return.
-            this.setState({
-              isClickedOutside: false
-            })
             return;
           }
           // Go up the DOM
           targetElement = targetElement.parentNode;
         } while (targetElement);
-      
+
         // This is a click outside.
-        this.setState({
-          isClickedOutside: true
-        })
+        // Called first due to overriden function
+        if (config && typeof config.onClickOutside === 'function') {
+          config.onClickOutside();
+        } else if (typeof WrappedComponent.onClickOutside === 'function') {
+          WrappedComponent.onClickOutside();
+        } else {
+          console.error('onClickOutside is not provided')
+        }
       });
     }
-  
+
     componentDidMount() {
       // If we are in an environment without a DOM such
       // as shallow rendering or snapshots then we exit
@@ -52,14 +43,12 @@ const WithClickOutside = (WrappedComponent, config) => {
         return;
       }
       this.componentNode = this.getComponentNode();
-      this.handleClickOutside()
+      this.listenClick()
     }
-  
+
     render() {
       return (
-        <ClickOutsideContext.Provider value={this.state.isClickedOutside}>
-          <WrappedComponent {...this.props} />
-        </ClickOutsideContext.Provider>
+        <WrappedComponent {...this.props} />
       )
     }
   }
