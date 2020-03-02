@@ -4,20 +4,19 @@ import { DropdownAPI } from ".";
 import List from "./list";
 
 import '../../styles/dropdown/withInput.scss';
-import { useEffect } from "react";
 import Input from "./Input";
-import WithClickOutside, { ClickOutsideContext } from "../../utils/onClickOutside";
+import WithClickOutside from "../../utils/onClickOutside";
 
 const WithInput = () => {
   const { items, openOnFocus, matchFromStart } = useContext(DropdownAPI)
   const [isOpen, setIsOpen] = useState(false)
   const [list, setList] = useState(items)
-  const isClickedOutside = useContext(ClickOutsideContext);
 
-
-  useEffect(() => {
-    setIsOpen(!isClickedOutside);
-  }, [isClickedOutside])
+  
+  // This structure is needed for HOC access
+  WithInput.onClickOutside = () => {
+    setIsOpen(false);
+  }
 
   const handleInputChange = (value) => {
     setIsOpen(true)
@@ -35,7 +34,6 @@ const WithInput = () => {
   
     setList(filteredItems)
   }
-
 
   return (
     <label className="with-input">
