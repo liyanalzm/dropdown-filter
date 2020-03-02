@@ -1,0 +1,31 @@
+.list {
+  text-align: left;
+  width: 250px;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  border: 1px solid #cdd7d6;
+  border-radius: 8px;
+  margin-top: 8px;
+
+  &__item {
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background-color: #d0e2ec;
+    }
+
+    &-active {
+      background-color: #6ca1c9;
+      pointer-events: none;
+    }
+  }
+
+  &-inset {
+    border-radius: 0;
+    border: none;
+  }
+}
