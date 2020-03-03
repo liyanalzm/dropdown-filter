@@ -5,7 +5,7 @@ import countries from "./countries.json";
 import { useState } from "react";
 
 function App() {
-  const [countryInput, setCountryInput] = useState({ value: 'MY', label: 'Malaysia'});
+  const [countryInput, setCountryInput] = useState({ value: '', label: ''});
   const [countryButton, setCountryButton] = useState({ value: '', label: ''});
 
   const handleCountryInput = (value) => {

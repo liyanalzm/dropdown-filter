@@ -24,6 +24,11 @@ const WithInput = () => {
     setList(filterList(value, items, matchFromStart))
   }
 
+  const handleInputClear = () => {
+    handleInputChange('')
+    setIsOpen(true)
+  }
+
   const handleClick = () => {
     openOnFocus && setIsOpen(true)
   }
@@ -36,7 +41,7 @@ const WithInput = () => {
 
   return (
     <div className="with-input">
-      <Input onInputClick={handleClick} onInputChange={handleInputChange} ref={inputRef} />
+      <Input onInputClick={handleClick} onInputChange={handleInputChange} onInputClear={handleInputClear} ref={inputRef} />
       <List list={list} isOpen={isOpen} handleOptionSelected={handleOptionSelected} />
     </div>
   );

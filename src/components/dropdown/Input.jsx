@@ -2,35 +2,56 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DropdownAPI } from ".";
 
-import '../../styles/dropdown/withInput.scss';
+import "../../styles/dropdown/input.scss";
 
-const Input =  React.forwardRef(({ onInputClick, onInputChange, onInputBlur }, ref) => {
-  const { placeholder, value: selectedOption } = useContext(DropdownAPI)
-  const [inputValue, setInputValue] = useState(selectedOption.label)
-  const [placeholderValue, setPlaceholderValue] = useState(selectedOption.label || placeholder)
+const Input = React.forwardRef(
+  ({ onInputClick, onInputChange, onInputBlur }, ref) => {
+    const { placeholder, value: selectedOption, withPopout } = useContext(
+      DropdownAPI
+    );
+    const [inputValue, setInputValue] = useState(selectedOption.label);
+    const [isBlurred, setIsBlurred] = useState(false);
 
-  useEffect(() => {
-    setInputValue(selectedOption.label)
-  }, [selectedOption])  
+    useEffect(() => {
+      setInputValue(selectedOption.label);
+    }, [selectedOption]);
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value)
-    onInputChange && onInputChange(e.target.value)
+    const handleInputChange = e => {
+      setInputValue(e.target.value);
+      onInputChange && onInputChange(e.target.value);
+    };
+
+    const handleInputClick = () => {
+      ref && ref.current.select();
+      onInputClick && onInputClick();
+    };
+
+    const handleInputBlur = () => {
+      onInputBlur && onInputBlur();
+      setIsBlurred(true);
+    };
+
+    const clear = () => {
+      setInputValue("");
+    };
+
+    return (
+      <label className="input-label">
+        <input
+          type="text"
+          ref={ref}
+          value={inputValue}
+          placeholder={placeholder}
+          onChange={handleInputChange}
+          onClick={handleInputClick}
+          onBlur={handleInputBlur}
+        />
+        {!withPopout && isBlurred && inputValue && (
+          <span onClick={clear}>x</span>
+        )}
+      </label>
+    );
   }
-
-  const handleInputClick = () => {
-    setInputValue('')
-    setPlaceholderValue(selectedOption.label)
-    onInputClick && onInputClick()
-  }
-
-  const handleInputBlur = () => {
-    onInputBlur && onInputBlur()
-  }
-
-  return (
-    <input type="text" ref={ref} value={inputValue} placeholder={placeholderValue} onChange={handleInputChange} onClick={handleInputClick} onBlur={handleInputBlur}  />
-  );
-});
+);
 
 export default Input;
