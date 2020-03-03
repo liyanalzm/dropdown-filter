@@ -27,6 +27,7 @@ const WithInput = () => {
   const handleInputClear = () => {
     handleInputChange('')
     setIsOpen(true)
+    onOptionSelected && onOptionSelected({ value: '', label: '' })
   }
 
   const handleClick = () => {

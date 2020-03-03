@@ -5,7 +5,7 @@ import { DropdownAPI } from ".";
 import "../../styles/dropdown/input.scss";
 
 const Input = React.forwardRef(
-  ({ onInputClick, onInputChange, onInputBlur }, ref) => {
+  ({ onInputClick, onInputChange, onInputBlur, onInputClear }, ref) => {
     const { placeholder, value: selectedOption, withPopout } = useContext(
       DropdownAPI
     );
@@ -33,6 +33,7 @@ const Input = React.forwardRef(
 
     const clear = () => {
       setInputValue("");
+      onInputClear && onInputClear()
     };
 
     return (
