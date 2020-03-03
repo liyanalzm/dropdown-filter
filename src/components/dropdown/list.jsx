@@ -4,23 +4,28 @@ import "../../styles/dropdown/list.scss";
 import { useContext } from "react";
 import { DropdownAPI } from ".";
 
-const List = ({ list }) => {
-  const { inset, value: selectedOption, onOptionSelected } = useContext(DropdownAPI);
-  return (
-    <div className={`list ${inset ? 'list-inset' : ''}`} id="list">
+const List = ({ list, isOpen, handleOptionSelected, inset }) => {
+  const { value: selectedOption } = useContext(
+    DropdownAPI
+  );
+
+  return isOpen ? (
+    <div className={`list ${!inset ? "popout" : ""}`} id="list">
       {list.map(({ value, label }) => (
         <div
           className={`list__item ${
-            selectedOption && selectedOption.value === value ? "list__item-active" : ""
+            selectedOption && selectedOption.value === value
+              ? "list__item-active"
+              : ""
           }`}
-          onClick={() => onOptionSelected && onOptionSelected({ value, label })}
+          onClick={() => handleOptionSelected({ value, label })}
           key={value}
         >
           {label}
         </div>
       ))}
     </div>
-  );
+  ) : null;
 };
 
 export default List;

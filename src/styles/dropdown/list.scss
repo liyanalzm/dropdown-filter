@@ -1,11 +1,11 @@
+@import '../common.scss';
+
 .list {
   text-align: left;
   width: 250px;
   max-height: 300px;
   overflow-x: hidden;
   overflow-y: visible;
-  border: 1px solid #cdd7d6;
-  border-radius: 8px;
   margin-top: 8px;
 
   &__item {
@@ -22,10 +22,5 @@
       background-color: #6ca1c9;
       pointer-events: none;
     }
-  }
-
-  &-inset {
-    border-radius: 0;
-    border: none;
   }
 }
