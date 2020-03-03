@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useContext } from "react";
 import { DropdownAPI } from ".";
 import List from "./List";
@@ -7,6 +7,8 @@ import '../../styles/dropdown/withInput.scss';
 import Input from "./Input";
 import WithClickOutside from "../../utils/onClickOutside";
 import { filterList } from "../../utils/filter";
+import { handleKeyPress } from "./keypress";
+import { listenKeyPress, removeKeyPress } from "../../utils/events";
 
 const WithInput = () => {
   const inputRef = useRef()
@@ -14,10 +16,14 @@ const WithInput = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [list, setList] = useState(items)
 
+  useEffect(() => {
+    listenKeyPress('withInput', (event) => handleKeyPress(event, handleList))
+    return () => removeKeyPress('withInput', (event) => handleKeyPress(event, handleList))
+  }, [])
   
   // This structure is needed for HOC access
   WithInput.onClickOutside = () => {
-    setIsOpen(false);
+    handleList(false);
   }
 
   const handleInputChange = (value) => {
@@ -26,23 +32,27 @@ const WithInput = () => {
 
   const handleInputClear = () => {
     handleInputChange('')
-    setIsOpen(true)
+    handleList(true)
     onOptionSelected && onOptionSelected({ value: '', label: '' })
   }
 
-  const handleClick = () => {
-    openOnFocus && setIsOpen(true)
+  const handleInputFocus = () => {
+    openOnFocus && handleList(true)
+  }
+
+  const handleList = (isListOpen) => {
+    setIsOpen(isListOpen)
   }
 
   const handleOptionSelected = ({ value, label }) => {
-    setIsOpen(false)
+    handleList(false)
     handleInputChange('')
     onOptionSelected && onOptionSelected({ value, label });
   };
 
   return (
-    <div className="with-input">
-      <Input onInputClick={handleClick} onInputChange={handleInputChange} onInputClear={handleInputClear} ref={inputRef} />
+    <div className="with-input" id="withInput">
+      <Input onInputFocus={handleInputFocus} onInputChange={handleInputChange} onInputClear={handleInputClear} ref={inputRef} />
       <List list={list} isOpen={isOpen} handleOptionSelected={handleOptionSelected} />
     </div>
   );

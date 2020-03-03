@@ -4,7 +4,6 @@ import { findDOMNode } from "react-dom";
 const WithClickOutside = (WrappedComponent, config) => {
   return class WithClickoutside extends React.Component {
 
-
     getComponentNode = () => {
       return findDOMNode(this);
     };

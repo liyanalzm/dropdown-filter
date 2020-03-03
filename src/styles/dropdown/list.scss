@@ -7,14 +7,16 @@
   overflow-x: hidden;
   overflow-y: visible;
   margin-top: 8px;
+  outline: none;
 
   &__item {
     padding: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    outline: none;
 
-    &:hover {
+    &:hover, &-hover {
       background-color: #d0e2ec;
     }
 
