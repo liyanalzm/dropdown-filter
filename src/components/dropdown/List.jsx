@@ -2,7 +2,7 @@ import React from "react";
 
 import "../../styles/dropdown/list.scss";
 import { useContext } from "react";
-import { DropdownAPI } from ".";
+import { DropdownAPI } from ".";https://github.com/liyanalzm/dropdown-filter/blob/master/src/components/dropdown/list.jsx
 
 const List = ({ list, isOpen, handleOptionSelected, inset }) => {
   const { value: selectedOption } = useContext(DropdownAPI);
