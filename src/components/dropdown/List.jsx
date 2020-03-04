@@ -11,6 +11,7 @@ const List = ({ list, isOpen, handleOptionSelected, inset }) => {
     if (isOpen) {
       handleListKeyPress()
     }
+    // eslint-disable-next-line
   }, [isOpen]);
 
 
