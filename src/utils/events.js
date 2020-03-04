@@ -1,7 +1,5 @@
 export const listenKeyPress = (componentId, onKeyPress) => {
-  console.log('helloooo')
   if (componentId) {
-    console.log(document.getElementById(componentId))
     const element = document.getElementById(componentId);
     element && element.addEventListener("keydown", evt => {
       if (typeof onKeyPress === "function") {

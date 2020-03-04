@@ -17,7 +17,7 @@ const WithPopout = () => {
   useEffect(() => {
     listenKeyPress('withPopout', (event) => handleKeyPress(event, handleList))
     return () => removeKeyPress('withPopout', (event) => handleKeyPress(event, handleList))
-  }, [])
+  }, [isOpen])
 
   const onButtonClicked = () => {
     handleList(!isOpen);
