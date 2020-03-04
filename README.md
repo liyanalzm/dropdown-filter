@@ -12,3 +12,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## See it works/ edit live
 
 You can see how it works or even edit live at [https://codesandbox.io/s/github/liyanalzm/dropdown-filter]
+
+
+## Features available
+
+ - Input with filtering mechanism
+ - Popout of list with filtering mechanism
+ - Accesibility feature with keyboard
+
